@@ -1,9 +1,12 @@
 ---
+import "../styles/global.css";
+
 const pageTitle = "Mi blog de Astro aprendizaje";
 ---
+
 <html lang="es">
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{pageTitle}</title>
   </head>
@@ -13,11 +16,13 @@ const pageTitle = "Mi blog de Astro aprendizaje";
     <a href="/blog/">Blog</a>
 
     <h1>{pageTitle}</h1>
-    <p>Aquí es donde publicaré acerca de mi viaje aprendiendo Astro./p>
-    <ul>
-      <li><a href="/posts/post-1/">Publicación 1</a></li>
-      <li><a href="/posts/post-2/">Publicación 2</a></li>
-      <li><a href="/posts/post-3/">Publicación 3</a></li>
-    </ul>
+    <p>
+      Aquí es donde publicaré acerca de mi viaje aprendiendo Astro./p>
+      <ul>
+        <li><a href="/posts/post-1/">Publicación 1</a></li>
+        <li><a href="/posts/post-2/">Publicación 2</a></li>
+        <li><a href="/posts/post-3/">Publicación 3</a></li>
+      </ul>
+    </p>
   </body>
 </html>
