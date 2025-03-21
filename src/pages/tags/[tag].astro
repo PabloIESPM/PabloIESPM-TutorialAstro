@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogPost from "../../components/BlogPost.astro";
+
+export async function getStaticPaths() {
+  // Reemplazar Astro.glob con import.meta.glob
+  const allPostsObject = import.meta.glob("../posts/*.md", { eager: true });
+
+  // Convertir el objeto en un array
+  const allPosts = Object.values(allPostsObject);
+
+  // Extraer etiquetas únicas
+  const uniqueTags = [
+    ...new Set(allPosts.flatMap((post) => post.frontmatter.tags || [])),
+  ];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) =>
+      post.frontmatter.tags?.includes(tag)
+    );
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout pageTitle={tag}>
+  <p>Posts etiquetados con {tag}</p>
+  <ul>
+    {
+      posts.map((post) => (
+        <BlogPost url={post.url} title={post.frontmatter.title} />
+      ))
+    }
+  </ul>
+</BaseLayout>
