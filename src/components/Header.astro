@@ -4,10 +4,15 @@ import Navigation from "./Navigation.astro";
 import ThemeIcon from "./ThemeIcon.astro";
 ---
 
-<header>
-  <nav>
-    <Hamburger />
-    <ThemeIcon />
-    <Navigation />
+<header class="py-4 relative">
+  <nav class="flex justify-between items-center">
+    <div class="flex items-center">
+      <Hamburger />
+      {/* Site title or logo can go here if needed, or adjust spacing if only hamburger shown on mobile */}
+    </div>
+    <div class="flex items-center">
+      <ThemeIcon />
+      <Navigation />
+    </div>
   </nav>
 </header>
