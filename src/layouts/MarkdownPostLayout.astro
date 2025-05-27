@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import { Image } from "astro:assets";
 const { frontmatter } = Astro.props;
+
+const isRemoteImage = frontmatter.image.url.startsWith("http://") || frontmatter.image.url.startsWith("https://");
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
@@ -9,11 +12,24 @@ const { frontmatter } = Astro.props;
 
   <p>Escrito por: {frontmatter.author}</p>
 
-  <img
-    src={frontmatter.image.url}
-    alt={frontmatter.image.alt}
-    class="max-w-xs sm:max-w-sm md:max-w-md mx-auto my-4 rounded shadow-md"
-  />
+  {isRemoteImage ? (
+    <img
+      src={frontmatter.image.url}
+      alt={frontmatter.image.alt}
+      class="max-w-xs sm:max-w-sm md:max-w-md mx-auto my-4 rounded shadow-md"
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <Image
+      src={frontmatter.image.url} /* This assumes the local path is directly usable or relative to src/assets */
+      alt={frontmatter.image.alt}
+      width={768}
+      height={432}
+      format="webp"
+      class="mx-auto my-4 rounded shadow-md"
+    />
+  )}
 
   <div class="flex flex-wrap my-4">
     {

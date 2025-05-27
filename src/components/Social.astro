@@ -1,9 +1,38 @@
 ---
 const { platform, username } = Astro.props;
+
+let url;
+let ariaLabelBase;
+
+switch (platform.toLowerCase()) {
+  case "twitter":
+    url = `https://twitter.com/${username}`;
+    ariaLabelBase = "Sigue a";
+    break;
+  case "github":
+    url = `https://github.com/${username}`;
+    ariaLabelBase = "Visita el perfil de";
+    break;
+  case "youtube":
+    url = `https://youtube.com/@${username}`;
+    ariaLabelBase = "Suscríbete al canal de";
+    break;
+  default:
+    // Default to old pattern or skip - let's skip for now if platform is not recognized
+    // url = `https://www.${platform}.com/${username}`; 
+    // ariaLabelBase = "Visita";
+    break;
+}
+
+const ariaLabel = url ? `${ariaLabelBase} ${username} en ${platform.charAt(0).toUpperCase() + platform.slice(1)}` : null;
 ---
 
-<a
-  href={`https://www.${platform}.com/${username}`}
-  class="py-2 px-4 text-white bg-purple-700 no-underline hover:bg-purple-800"
-  >{platform}</a
->
+{url && (
+  <a
+    href={url}
+    class="py-2 px-4 text-white bg-purple-700 no-underline hover:bg-purple-800"
+    aria-label={ariaLabel}
+  >
+    {platform.charAt(0).toUpperCase() + platform.slice(1)}
+  </a>
+)}

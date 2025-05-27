@@ -1,5 +1,13 @@
 ---
-const { title, url } = Astro.props;
+const { title, url, pubDate } = Astro.props;
+const formattedDate = typeof pubDate === 'string' 
+  ? pubDate.slice(0, 10) 
+  : pubDate 
+    ? new Date(pubDate).toLocaleDateString('en-CA') 
+    : 'No date';
 ---
 
-<li><a href={url}>{title}</a></li>
+<li class="mb-4">
+  <a href={url} class="text-lg text-blue-600 dark:text-blue-400 hover:underline">{title}</a>
+  <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{formattedDate}</p>
+</li>
