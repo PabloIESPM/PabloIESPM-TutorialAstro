@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import { Image } from "astro:assets";
 const { frontmatter } = Astro.props;
+
+const isRemoteImage = frontmatter.image.url.startsWith("http://") || frontmatter.image.url.startsWith("https://");
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
@@ -9,36 +12,36 @@ const { frontmatter } = Astro.props;
 
   <p>Escrito por: {frontmatter.author}</p>
 
-  <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
+  {isRemoteImage ? (
+    <img
+      src={frontmatter.image.url}
+      alt={frontmatter.image.alt}
+      class="max-w-xs sm:max-w-sm md:max-w-md mx-auto my-4 rounded shadow-md"
+      loading="lazy"
+      decoding="async"
+    />
+  ) : (
+    <Image
+      src={frontmatter.image.url} /* This assumes the local path is directly usable or relative to src/assets */
+      alt={frontmatter.image.alt}
+      width={768}
+      height={432}
+      format="webp"
+      class="mx-auto my-4 rounded shadow-md"
+    />
+  )}
 
-  <div class="tags">
+  <div class="flex flex-wrap my-4">
     {
       frontmatter.tags.map((tag) => (
-        <p class="tag">
-          <a href={`/tags/${tag}`}>{tag}</a>
+        <p class="m-1 border border-dotted border-gray-400 rounded-md py-1 px-3 text-sm bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 dark:border-gray-600">
+          <a href={`/tags/${tag}`} class="text-blue-600 dark:text-blue-400 hover:underline">{tag}</a>
         </p>
       ))
     }
   </div>
 
-  <slot />
+  <div class="prose prose-slate dark:prose-invert max-w-none">
+    <slot />
+  </div>
 </BaseLayout>
-<style>
-  a {
-    color: #00539f;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: 0.5em;
-    padding: 0.5em 1em;
-    font-size: 1.15em;
-    background-color: #f8fcfd;
-  }
-</style>
