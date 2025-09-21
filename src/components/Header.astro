@@ -4,10 +4,20 @@ import Navigation from "./Navigation.astro";
 import ThemeIcon from "./ThemeIcon.astro";
 ---
 
-<header>
-  <nav>
-    <Hamburger />
-    <ThemeIcon />
-    <Navigation />
+<header class="flex flex-row items-center justify-between w-full p-4 absolute top-0 left-0 z-50 bg-julesDarkBg">
+  <nav class="flex justify-between items-center w-full">
+    <div class="flex items-center">
+      <a
+        href="/"
+        class="text-xl font-bold text-julesPurple-50 hover:text-julesPurple-300 mr-4"
+        >Glitch and Glory</a
+      >
+      <Hamburger />
+      {/* Site title or logo can go here if needed, or adjust spacing if only hamburger shown on mobile */}
+    </div>
+    <div class="flex items-center">
+      <ThemeIcon />
+      <Navigation />
+    </div>
   </nav>
 </header>
